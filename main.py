@@ -3,7 +3,7 @@
 countPlatesServer/main.py
 
 designed for sushi-cashier(https://emptygamer.itch.io/sushi-cashier)
-accuracy: 70~80%
+accuracy: 85% more or less
 '''
 
 import os
@@ -25,14 +25,17 @@ def classifyEdge(rLen, cLen, rRng, cRng, edge, classify, link, lastClass):
                 classify[r][c] = lastClass
             else:
                 neighbor = [
+                    ''' didn't care about oblique direction '''
                     # (classify[r+1][c+1] if edge[r+1][c+1] != 255 else lastClass) if r+1 <  rLen and c+1 <  cLen else lastClass, 
-                    (classify[r+1][c  ] if edge[r+1][c  ] != 255 else lastClass) if r+1 <  rLen                 else lastClass, 
                     # (classify[r+1][c-1] if edge[r+1][c-1] != 255 else lastClass) if r+1 <  rLen and c-1 >= 0    else lastClass, 
-                    (classify[r  ][c+1] if edge[r  ][c+1] != 255 else lastClass) if c+1 <  cLen                 else lastClass, 
-                    (classify[r  ][c-1] if edge[r  ][c-1] != 255 else lastClass) if c-1 >= 0                    else lastClass, 
                     # (classify[r-1][c+1] if edge[r-1][c+1] != 255 else lastClass) if r-1 >= 0    and c+1 <  cLen else lastClass, 
-                    (classify[r-1][c  ] if edge[r-1][c  ] != 255 else lastClass) if r-1 >= 0                    else lastClass, 
                     # (classify[r-1][c-1] if edge[r-1][c-1] != 255 else lastClass) if r-1 >= 0    and c-1 >= 0    else lastClass
+                    ''' value unset '''
+                    # (classify[r+1][c  ] if edge[r+1][c  ] != 255 else lastClass) if r+1 <  rLen                 else lastClass, 
+                    # (classify[r  ][c+1] if edge[r  ][c+1] != 255 else lastClass) if c+1 <  cLen                 else lastClass, 
+                    ''' reference valuable '''
+                    (classify[r  ][c-1] if edge[r  ][c-1] != 255 else lastClass) if c-1 >= 0                    else lastClass, 
+                    (classify[r-1][c  ] if edge[r-1][c  ] != 255 else lastClass) if r-1 >= 0                    else lastClass, 
                 ]
                 value = npmin(nparray(neighbor))
                 for n in neighbor:
